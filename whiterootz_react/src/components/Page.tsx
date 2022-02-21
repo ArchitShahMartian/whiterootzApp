@@ -1,6 +1,8 @@
-import { H6, Switch } from "@blueprintjs/core";
+import { Switch } from "@blueprintjs/core";
 import * as React from "react";
-import { Dashboard } from './Dashboard.tsx';
+import { Dashboard } from "./Dashboard.tsx";
+import { AxiosRequestConfig } from "axios";
+import { DeviceState } from "../services/api/DeviceState.ts";
 
 // interface IPageProps {
 //
@@ -43,7 +45,16 @@ export class Page extends React.Component<IPageState> {
         if (device === "Fan"){
             this.setState(prevState => ({
                fanState: !prevState.fanState,
-            }))
+            }),
+                () => DeviceState.update(
+                {params: {['state']: this.state.fanState}})
+                .then((res: any) => {
+                    console.log("Done")
+            })
+                .catch((error) => {
+                    console.log("Error")
+                })
+            )
         }
         else if (device === "Humidifier"){
             this.setState(prevState => ({
