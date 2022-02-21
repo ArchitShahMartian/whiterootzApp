@@ -28,7 +28,6 @@ export class Page extends React.Component<IPageState> {
     }
 
     render(){
-        console.log("this.state.page=", this.state)
         return (
             <div>
                 <Dashboard
@@ -41,18 +40,16 @@ export class Page extends React.Component<IPageState> {
     }
 
     deviceHandler = (device) => {
-        console.log("device")
         if (device === "Fan"){
             this.setState(prevState => ({
                fanState: !prevState.fanState,
-            }),
-                () => DeviceState.update(
+            }), () => DeviceState.update(
                 {params: {['state']: this.state.fanState}})
-                .then((res: any) => {
-                    console.log("Done")
+                .then((response: any) => {
+                    console.log(response.data)
             })
                 .catch((error) => {
-                    console.log("Error")
+                    console.log(error)
                 })
             )
         }

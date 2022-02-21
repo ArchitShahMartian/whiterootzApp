@@ -3,7 +3,6 @@ import * as React from "react";
 
 export class Dashboard extends React.Component {
     render(){
-        console.log("Dashboard Props=", this.props)
         return (
             <div>
             <Switch
