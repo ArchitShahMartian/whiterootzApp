@@ -1,6 +1,6 @@
 """Command to start gunicorn
 
-gunicorn -c gunicorn.py whiterootz_app.wsgi
+source /home/pi/misc/gitwork/whiterootzApp/venv/bin/activate && gunicorn -c gunicorn.py whiterootz_app.wsgi
 
 """
 

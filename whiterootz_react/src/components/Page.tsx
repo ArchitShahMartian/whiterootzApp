@@ -1,4 +1,3 @@
-import { Switch } from "@blueprintjs/core";
 import * as React from "react";
 import { Dashboard } from "./Dashboard.tsx";
 import { AxiosRequestConfig } from "axios";
@@ -29,7 +28,7 @@ export class Page extends React.Component<IPageState> {
 
     render(){
         return (
-            <div>
+            <div className={"bp3-dark"}>
                 <Dashboard
                     deviceHandler={this.deviceHandler}
                     fanState={this.state.fanState}
@@ -44,7 +43,7 @@ export class Page extends React.Component<IPageState> {
             this.setState(prevState => ({
                fanState: !prevState.fanState,
             }), () => DeviceState.update(
-                {params: {['state']: this.state.fanState}})
+                {params: {[device]: this.state.fanState}})
                 .then((response: any) => {
                     console.log(response.data)
             })
@@ -55,8 +54,16 @@ export class Page extends React.Component<IPageState> {
         }
         else if (device === "Humidifier"){
             this.setState(prevState => ({
-               humidifierState: !prevState.humidifierState
-            }))
+               humidifierState: !prevState.humidifierState,
+            }), () => DeviceState.update(
+                {params: {[device]: this.state.humidifierState}})
+                .then((response: any) => {
+                    console.log(response.data)
+            })
+                .catch((error) => {
+                    console.log(error)
+                })
+            )
         }
     }
 }
