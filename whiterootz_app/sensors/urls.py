@@ -1,8 +1,9 @@
 """Define the urls for the sensors."""
 
 from django.urls import path
-from .views import device_state
+from sensors.views import device_state, get_temperature
 
 urlpatterns = [
-    path('device-state/', device_state, name="device_state")
+    path('device-state/', device_state, name="device_state"),
+    path('get-temperature/', get_temperature, name="get_temperature")
 ]

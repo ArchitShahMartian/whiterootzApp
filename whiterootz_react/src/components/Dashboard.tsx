@@ -11,7 +11,7 @@ export class Dashboard extends React.Component {
                         {/*<NavbarDivider/>*/}
                     </NavbarGroup>
                     <NavbarGroup className={"bp3-align-right"}>
-                        <Text title={"Temperature"}><Tag>24 C</Tag> Temp</Text>
+                        <Text title={"Temperature"}><Tag>{parseFloat(this.props.temperatureState).toFixed(1)} C</Tag> Temp</Text>
                         <NavbarDivider/>
                         <Switch
                             defaultChecked={this.props.humidifierState}

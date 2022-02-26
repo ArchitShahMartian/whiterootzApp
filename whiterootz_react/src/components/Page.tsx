@@ -2,6 +2,7 @@ import * as React from "react";
 import { Dashboard } from "./Dashboard.tsx";
 import { AxiosRequestConfig } from "axios";
 import { DeviceState } from "../services/api/DeviceState.ts";
+import { Sensors } from "../services/api/Sensors.ts";
 
 // interface IPageProps {
 //
@@ -10,6 +11,8 @@ import { DeviceState } from "../services/api/DeviceState.ts";
 interface IPageState {
     fanState?: boolean
     humidifierState?: boolean
+    temperatureSensor: string
+    temp_last_updated: string
 }
 
 // interface deviceState {
@@ -21,9 +24,11 @@ export class Page extends React.Component<IPageState> {
         super(props);
         this.state = {
             fanState: true,
-            humidifierState: true
+            humidifierState: true,
+            temperatureSensor: "NA"
         }
         this.deviceHandler = this.deviceHandler.bind(this);
+        this.getTemperature = this.getTemperature.bind(this)
     }
 
     render(){
@@ -33,9 +38,31 @@ export class Page extends React.Component<IPageState> {
                     deviceHandler={this.deviceHandler}
                     fanState={this.state.fanState}
                     humidifierState={this.state.humidifierState}
+                    temperatureState={this.state.temperatureSensor}
+                    last_updated={this.state.temp_last_updated}
                 />
             </div>
         )
+    }
+
+    componentDidMount(){
+        Promise.all([
+            this.getTemperature()]
+        )
+    }
+
+    componentWillUnmount(){
+        clearTimeout(this.intervalId)
+    }
+
+    getTemperature(){
+        Sensors.list().then((response: any) => {
+            this.setState({
+                temperatureSensor: response.data.value,
+                temp_last_updated: response.data.last_updated
+            });
+            this.intervalId = setTimeout(this.getTemperature.bind(this), 1800000)
+        })
     }
 
     deviceHandler = (device) => {
