@@ -55,7 +55,7 @@ export class Page extends React.Component<IPageState> {
         clearTimeout(this.intervalId)
     }
 
-    getTemperature(){
+    getTemperature = () => {
         Sensors.list().then((response: any) => {
             this.setState({
                 temperatureSensor: response.data.value,

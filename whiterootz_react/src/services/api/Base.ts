@@ -1,9 +1,8 @@
 import axios from "axios";
-import * as querystring from "querystring";
-
+import * as querystring from "querystring-es3";
 
 export const axiosClient = axios.create({
-    baseURL: 'http://192.168.1.219:8000/',
+    baseURL: 'http://192.168.1.69:8000/',
     timeout: 6000,
     paramsSerializer: params => {
         return querystring.stringify(params)
